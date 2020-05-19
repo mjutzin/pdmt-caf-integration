@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "f7cfaefb-2806-460d-b77a-3eb690ae0772",
+		"name": "phc-nerd-int",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth-nerd-int",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "15b12afa-2cd3-4b7c-b87b-9f34055cedfb",
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"access_token\", data.access_token);\r",
+							"pm.environment.set(\"refresh_token\", data.refresh_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{client-id}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{username}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{concatenated-password-and-security-token}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{client-secret}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://test.salesforce.com/services/oauth2/token",
+					"protocol": "https",
+					"host": [
+						"test",
+						"salesforce",
+						"com"
+					],
+					"path": [
+						"services",
+						"oauth2",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-positions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f912248f-3204-46e8-8b85-cd38079dd68c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {access_token}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "https://{instance_url}/services/data/v48.0/query/?q=SELECT+Id,Requistion_ID__c,Name,Specialty__c,Sub_Specialty__c,Description_for_Website__c+FROM+Position__c+WHERE+Recruitment_Status__c=null",
+					"protocol": "https",
+					"host": [
+						"{instance_url}"
+					],
+					"path": [
+						"services",
+						"data",
+						"v48.0",
+						"query",
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "SELECT+Id,Requistion_ID__c,Name,Specialty__c,Sub_Specialty__c,Description_for_Website__c+FROM+Position__c+WHERE+Recruitment_Status__c=null"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "accessToken",
+				"value": "{{access_token}}",
+				"type": "string"
+			},
+			{
+				"key": "tokenType",
+				"value": "Bearer",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b2695547-2a9d-4c00-a17d-09f8576f30d8",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "74e2b4e1-3cde-478d-ab04-45f41f2ceb99",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,44 @@
+<div id="placeholder"/>
+<!--<iframe src="form-url-here" width="50px" height="300px"></iframe>-->
+
+<script type="text/javascript">
+    /** Example of how to embed a Salesforce flow into a webpage via iframe and 
+	 *  pass in a query param.
+     *  Should be compatible with IE11.
+     *
+     *  @author mjutzin
+     */
+    (function ( w ) {
+
+        w.URLSearchParams = w.URLSearchParams || function ( searchString ) {
+            var self = this;
+            self.searchString = searchString;
+            self.get = function ( name ) {
+                var results = new RegExp( '[\?&]' + name + '=([^&#]*)' ).exec( self.searchString );
+                if ( results == null ) {
+                    return null;
+                } else {
+                    return decodeURI( results[1] ) || 0;
+                }
+            };
+        }
+
+    })( window );
+
+    function buildIFrame() {
+        var urlParams = new URLSearchParams( window.location.search );
+        console.log( 'here we are' );
+        var url = "form-url-here";
+        var reqid = urlParams.get( "reqid" );
+        if ( !/^\d+$/.test( reqid ) ) reqid = null
+        var ifrm = document.createElement( "iframe" );
+        ifrm.setAttribute( "src", url + (reqid ? "?reqid=" + reqid : "") );
+        ifrm.style.width = "70%";
+        ifrm.style.height = "330px";
+
+        document.getElementById( "placeholder" ).appendChild( ifrm );
+    }
+
+    buildIFrame();
+
+</script>
